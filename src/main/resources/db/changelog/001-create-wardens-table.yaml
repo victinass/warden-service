@@ -46,3 +46,6 @@ databaseChangeLog:
                   type: VARCHAR(20)
                   constraints:
                     nullable: false
+      rollback:
+        - dropTable:
+            tableName: wardens
