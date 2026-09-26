@@ -12,6 +12,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: warden-service:latest
     container_name: warden-service
     depends_on:

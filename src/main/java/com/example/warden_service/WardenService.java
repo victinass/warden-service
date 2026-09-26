@@ -30,7 +30,9 @@ public class WardenService {
     public Warden update(Long id, Warden updatedWarden) {
         Warden warden = getById(id);
 
-        warden.setFullName(updatedWarden.getFullName());
+        warden.setLastName(updatedWarden.getLastName());
+        warden.setFirstName(updatedWarden.getFirstName());
+        warden.setPatronymic(updatedWarden.getPatronymic());
         warden.setBirthDate(updatedWarden.getBirthDate());
         warden.setPosition(updatedWarden.getPosition());
         warden.setHireDate(updatedWarden.getHireDate());
