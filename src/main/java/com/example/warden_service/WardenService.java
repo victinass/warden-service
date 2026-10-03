@@ -2,16 +2,32 @@
 package com.example.warden_service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 @Service
 public class WardenService {
 
-    private final WardenRepository wardenRepository;
+    private static final Logger logger = LoggerFactory.getLogger(WardenService.class);
 
-    public WardenService(WardenRepository wardenRepository) {
+    private final WardenRepository wardenRepository;
+    private final RestTemplate restTemplate;
+    private final String reportServiceUrl;
+
+    public WardenService(
+            WardenRepository wardenRepository,
+            RestTemplate restTemplate,
+            @Value("${report-service.url}") String reportServiceUrl) {
         this.wardenRepository = wardenRepository;
+        this.restTemplate = restTemplate;
+        this.reportServiceUrl = reportServiceUrl;
     }
 
     public Warden create(Warden warden) {
@@ -62,5 +78,18 @@ public class WardenService {
 
     public long countFired() {
         return wardenRepository.countByStatus("FIRED");
+    }
+
+    public List<Warden> getReportWardens() {
+        logger.info("Requesting wardens report from report-service");
+        ResponseEntity<List<Warden>> response = restTemplate.exchange(
+                reportServiceUrl + "/api/reports/wardens",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                });
+
+            logger.info("Received wardens report from report-service");
+        return response.getBody() == null ? List.of() : response.getBody();
     }
 }

@@ -12,3 +12,10 @@ spring:
 
   liquibase:
     enabled: true
+
+report-service:
+  url: ${REPORT_SERVICE_URL:http://localhost:8081}
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%X{traceId}] %logger{36} - %msg%n"

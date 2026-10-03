@@ -57,4 +57,9 @@ public class WardenController {
 
         return report;
     }
+
+    @GetMapping("/report/list")
+    public List<Warden> getReportWardens() {
+        return wardenService.getReportWardens();
+    }
 }

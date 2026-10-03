@@ -23,6 +23,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      REPORT_SERVICE_URL: http://report-service:8081
 
   report-service:
     build:
@@ -42,7 +43,6 @@ services:
     container_name: warden-gateway
     depends_on:
       - app
-      - report-service
     ports:
       - "8088:80"
     volumes:
