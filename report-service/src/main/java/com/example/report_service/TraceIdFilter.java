@@ -12,8 +12,8 @@ import java.util.UUID;
 
 public class TraceIdFilter extends OncePerRequestFilter {
 
-    private static final String HEADER_NAME = "X-Trace-Id";
-    private static final String TRACE_ID = "traceId";
+    public static final String HEADER_NAME = "X-Trace-Id";
+    public static final String TRACE_ID = "traceId";
 
     @Override
     protected void doFilterInternal(
