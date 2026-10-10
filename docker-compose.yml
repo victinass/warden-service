@@ -19,11 +19,14 @@ services:
     container_name: warden-service
     depends_on:
       - postgres
+      - report-service
+      - file-storage-service
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
       REPORT_SERVICE_URL: http://report-service:8081
+      FILE_STORAGE_URL: http://file-storage-service:8082
 
   report-service:
     build:
@@ -37,6 +40,18 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      FILE_STORAGE_URL: http://file-storage-service:8082
+
+  file-storage-service:
+    build:
+      context: .
+      dockerfile: file-storage-service/Dockerfile
+    image: file-storage-service:latest
+    container_name: file-storage-service
+    environment:
+      FILE_STORAGE_PATH: /app/data/files
+    volumes:
+      - file_storage_data:/app/data/files
 
   gateway:
     image: nginx:1.27-alpine
@@ -50,3 +65,4 @@ services:
 
 volumes:
   postgres_data:
+  file_storage_data:

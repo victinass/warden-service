@@ -15,3 +15,6 @@ spring:
 logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%X{traceId}] %logger{36} - %msg%n"
+
+file-storage:
+  url: ${FILE_STORAGE_URL:http://localhost:8082}

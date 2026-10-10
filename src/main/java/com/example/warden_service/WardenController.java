@@ -62,4 +62,9 @@ public class WardenController {
     public List<Warden> getReportWardens() {
         return wardenService.getReportWardens();
     }
+
+    @PostMapping("/report/file")
+    public String saveReport() {
+        return wardenService.saveReport();
+    }
 }
