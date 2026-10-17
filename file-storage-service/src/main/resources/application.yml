@@ -5,10 +5,16 @@ file-storage:
   path: ${FILE_STORAGE_PATH:./data/files}
 
 spring:
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+
+report:
+  queue:
+    name: ${REPORT_QUEUE_NAME:report-files}
 
 logging:
   pattern:

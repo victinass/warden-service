@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 import org.slf4j.MDC;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 
 @SpringBootApplication
 public class WardenServiceApplication {
@@ -20,6 +22,13 @@ public class WardenServiceApplication {
 			return execution.execute(request, body);
 		});
 		return restTemplate;
+	}
+
+	@Bean
+	ObjectMapper objectMapper() {
+		return JsonMapper.builder()
+				.findAndAddModules()
+				.build();
 	}
 
 	public static void main(String[] args) {

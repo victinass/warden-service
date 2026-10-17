@@ -12,12 +12,15 @@ spring:
 
   liquibase:
     enabled: true
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
 
 report-service:
   url: ${REPORT_SERVICE_URL:http://localhost:8081}
 
-file-storage:
-  url: ${FILE_STORAGE_URL:http://localhost:8082}
+report:
+  queue:
+    name: ${REPORT_QUEUE_NAME:report-files}
 
 logging:
   pattern:
